@@ -3,25 +3,56 @@ using System.Collections.Generic;
 
 namespace GradeBook
 {
+
+    public delegate void GradeAddedDelegate(object sender, EventArgs args);
     public class Book
     {
         public Book(string name)
         {
+
             grades = new List<double>();
             Name = name;
         }
 
+           public void AddGrade(char letter)
+        {
+            switch(letter) {
+                case 'A':
+                    AddGrade(90);
+                    break;
+                
+                case 'B': 
+                    AddGrade(80);
+                    break;
+                
+                case 'C':
+                    AddGrade(70);
+                    break;
+                
+                default: 
+                    AddGrade(0);
+                    break;
+            }
+        }
+
+
         public void AddGrade(double grade)
         {
-            if(grade <= 100 && grade >=0)
+            if(grade <= 100 && grade >= 0)
             {
-                grades.Add(grade);        
+                grades.Add(grade);   
+                if(GradeAdded != null) {
+                    GradeAdded(this, new EventArgs());
+                }
+              
             }
             else 
             {
                 throw new ArgumentException ($"Invalid {nameof(grade)}");
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -47,7 +78,7 @@ namespace GradeBook
                     result.Letter = 'B';
                     break;   
                 case var d when  d >=  70.0:
-                    result.Letter = 'c';
+                    result.Letter = 'C';
                     break;
                 case var d when d >=  60.0:
                     result.Letter = 'D';
@@ -61,6 +92,13 @@ namespace GradeBook
         }
 
         private List<double> grades;
-        public string Name;
+
+       public string Name 
+       {
+           get; 
+           set;
+       }
+
+       public const string CATEGORY = "Science";
     }
 }
