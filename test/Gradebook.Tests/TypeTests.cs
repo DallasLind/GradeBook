@@ -34,6 +34,7 @@ namespace Gradebook.Tests
         private void GetBookSetName(out Book book, string name) {
             book = new Book(name);
         }
+        
         [Fact]
         public void CanSetNameFromReference()
         {

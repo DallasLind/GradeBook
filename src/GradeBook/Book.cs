@@ -10,7 +10,14 @@ namespace GradeBook
         }
       public void AddGrade(double grade)
         {
-            grades.Add(grade);
+                if(grade <=100 || grade >= 0) 
+                {
+                    grades.Add(grade);
+            }
+            else {
+                Console.WriteLine("Invalid value");
+            }
+            
         }
 
         public Statistics GetStatistics() 
@@ -20,11 +27,13 @@ namespace GradeBook
              result.High = double.MinValue;
              result.Low = double.MaxValue;
             
-            foreach(var grade in grades) {
-                result.High = Math.Max(grade, result.High);
-                result.Low = Math.Min(grade, result.Low);
-                result.Average += grade;
-            }
+            
+            for(var index = 0; index < grades.Count; index += 1) {
+                result.High = Math.Max(grades[index], result.High);
+                result.Low = Math.Min(grades[index], result.Low);
+                result.Average += grades[index];
+                index += 1;
+            } 
             result.Average /= grades.Count;
 
             return result;
