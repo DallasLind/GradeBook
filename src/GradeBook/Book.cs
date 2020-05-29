@@ -127,7 +127,7 @@ namespace GradeBook
 
             foreach(var grade in grades)
             {
-                result.Add(grades[index]);
+                result.Add(grade);
             } 
 
             return result;
